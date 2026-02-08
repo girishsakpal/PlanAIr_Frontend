@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlanAIr</title>
+
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ROOT APP -->
+  <div id="root"></div>
+
+  <!-- ================= TASK MODAL ================= -->
+  <div id="taskModal" class="modal-overlay hidden">
+
+    <div class="modal-content">
+      <h2>Add New Task</h2>
+      <p class="modal-subtitle">Tell PlanAIr what you need to finish.</p>
+
+      <div class="form-group">
+        <label>Task Title</label>
+        <input type="text" id="taskTitle" placeholder="e.g. DSA Practice">
+      </div>
+
+      <div class="form-group">
+        <label>Duration</label>
+        <select id="taskDuration" style="width: 100%; padding: 12px 14px; border: 2px solid #E0E0E0; border-radius: 8px; font-size: 14px; font-weight: 500; background: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);">
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60" selected>1 hour</option>
+          <option value="90">1.5 hours</option>
+          <option value="120">2 hours</option>
+          <option value="150">2.5 hours</option>
+          <option value="180">3 hours</option>
+          <option value="240">4 hours</option>
+          <option value="300">5 hours</option>
+          <option value="360">6 hours</option>
+          <option value="420">7 hours</option>
+          <option value="480">8 hours</option>
+          <option value="540">9 hours</option>
+          <option value="600">10 hours</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="taskPriority">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Deadline (optional)</label>
+        <input type="date" id="taskDeadline">
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn btn-outline" id="cancelTaskBtn">Cancel</button>
+        <button class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= ROUTINE MODAL ================= -->
+  <div id="routineModal" class="modal-overlay hidden">
+
+    <div class="modal-content">
+      <h2><i class="fas fa-calendar-day"></i> Set up your daily routine</h2>
+      <p class="modal-subtitle">PlanAIr schedules work only in your free time.</p>
+
+      <div style="background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(129, 199, 132, 0.1) 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #4CAF50; margin-bottom: 25px;">
+        <h4 style="margin: 0 0 15px 0; color: #2E7D32; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+          <i class="fas fa-moon" style="margin-right: 8px;"></i>Sleep Schedule
+        </h4>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label style="display: block; font-size: 12px; color: #333; margin-bottom: 8px; font-weight: 600;">Wake Up Time</label>
+            <input type="time" id="routineWake" style="width: 100%; padding: 12px 14px; border: 2px solid #81C784; border-radius: 8px; font-size: 15px; background: white; cursor: pointer;">
+          </div>
+
+          <div class="form-group">
+            <label style="display: block; font-size: 12px; color: #333; margin-bottom: 8px; font-weight: 600;">Sleep Time</label>
+            <input type="time" id="routineSleep" style="width: 100%; padding: 12px 14px; border: 2px solid #81C784; border-radius: 8px; font-size: 15px; background: white; cursor: pointer;">
+          </div>
+        </div>
+      </div>
+
+      <div style="background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, rgba(255, 193, 7, 0.1) 100%); padding: 20px; border-radius: 12px; border-left: 4px solid #FF9800; margin-bottom: 25px;">
+        <h4 style="margin: 0 0 15px 0; color: #E65100; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">
+          <i class="fas fa-briefcase" style="margin-right: 8px;"></i>Busy Hours
+        </h4>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+          <div class="form-group">
+            <label style="display: block; font-size: 12px; color: #333; margin-bottom: 8px; font-weight: 600;">Busy From</label>
+            <input type="time" id="routineBusyStart" style="width: 100%; padding: 12px 14px; border: 2px solid #FFB74D; border-radius: 8px; font-size: 15px; background: white; cursor: pointer;">
+          </div>
+
+          <div class="form-group">
+            <label style="display: block; font-size: 12px; color: #333; margin-bottom: 8px; font-weight: 600;">Busy Until</label>
+            <input type="time" id="routineBusyEnd" style="width: 100%; padding: 12px 14px; border: 2px solid #FFB74D; border-radius: 8px; font-size: 15px; background: white; cursor: pointer;">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="saveRoutineBtn" style="width: 100%; margin-top: 10px;">
+        <i class="fas fa-save"></i> Save Routine
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ===== PARTIAL COMPLETION MODAL ===== -->
+  <div id="completionModal" class="modal-overlay hidden">
+
+    <div class="modal-content">
+      <h2><i class="fas fa-flag-checkered"></i> Mark Task Progress</h2>
+      <p class="modal-subtitle" id="taskProgressSubtitle"></p>
+
+      <div class="form-group">
+        <label id="hoursWorkedLabel">Hours Worked (0 - 3h)</label>
+        <input type="number" id="hoursWorkedInput" min="0" step="0.5" placeholder="e.g., 2">
+      </div>
+
+      <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+        <div style="font-size: 13px; color: #666; margin-bottom: 10px;">
+          <strong>Progress Preview:</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span id="progressPreview" style="font-weight: 600; color: #333;">0h / 3h (0%)</span>
+        </div>
+        <div style="width: 100%; height: 12px; background: #e0e0e0; border-radius: 6px; overflow: hidden;">
+          <div id="progressBar" style="height: 100%; width: 0%; background: linear-gradient(90deg, #4CAF50, #81C784); transition: width 0.2s ease;"></div>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn btn-outline" onclick="closeCompletionModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitPartialCompletion()">Save Progress</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== DELETE CONFIRM MODAL ===== -->
+  <div id="deleteModal" class="modal-overlay hidden">
+
+    <div class="modal-content">
+      <h2 style="color:#ef4444;">
+        <i class="fas fa-triangle-exclamation"></i> Delete Task
+      </h2>
+
+      <p style="margin-top:10px;">
+        Are you sure you want to permanently delete this task?
+      </p>
+
+      <div class="modal-buttons">
+        <button class="btn btn-outline" id="cancelDeleteBtn">Cancel</button>
+        <button class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>

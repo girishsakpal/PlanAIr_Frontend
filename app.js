@@ -59,6 +59,13 @@ function render() {
   if (state.currentPage === "upcoming") {
     fetchFullPlan();
   }
+
+  const moodSelect = document.getElementById("moodSelect");
+  if (moodSelect && !moodSelect.value) {
+    moodSelect.value = "normal";
+  }
+
+
 }
 
 

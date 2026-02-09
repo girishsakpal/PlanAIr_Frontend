@@ -818,7 +818,7 @@ body {
     top: 100%;
     left: 0;
     right: 0;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    background: var(--bg-secondary);
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -828,12 +828,18 @@ body {
     z-index: 98;
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
-    border-top: 1px solid rgba(255,255,255,0.03);
+    border-top: 1px solid var(--border);
   }
   .navbar-nav .nav-link {
     padding: 0.85rem 1.25rem;
     width: 100%;
     border-radius: 0;
+    color: var(--text);
+    background: transparent;
+  }
+  .navbar-nav .nav-link:hover {
+    background: rgba(0,0,0,0.04);
+    color: var(--text);
   }
   .navbar:hover .navbar-nav,
   .navbar:focus-within .navbar-nav {

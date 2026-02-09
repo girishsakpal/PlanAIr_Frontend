@@ -9,6 +9,9 @@ let state = {
   editingTaskId: null,
 };
 
+let mood_factor = 0.75; // default normal
+
+
 // ====== INITIALIZATION ======
 document.addEventListener("DOMContentLoaded", () => {
   if (state.token) {
@@ -406,16 +409,22 @@ function toggleAuthMode() {
 }
 
 function selectMood(moodValue, buttonElement) {
-  // Set the hidden select value
-  document.getElementById("moodSelect").value = moodValue;
-  
-  // Remove active class from all mood buttons
-  const allMoodButtons = document.querySelectorAll("button[onclick*='selectMood']");
-  allMoodButtons.forEach(btn => btn.classList.remove("active"));
-  
-  // Add active class to clicked button
+
+  // remove highlight from all buttons
+  document.querySelectorAll(".mood-btn").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  // highlight selected
   buttonElement.classList.add("active");
+
+  // directly set numeric factor
+  if (moodValue === "tired") moodFactor = 0.55;
+  else if (moodValue === "normal") moodFactor = 0.75;
+  else if (moodValue === "focused") moodFactor = 0.95;
+  else if (moodValue === "productive") moodFactor = 1.15;
 }
+
 
 let currentTaskCompletion = { taskId: null, totalHours: 0, workedHours: 0 };
 
@@ -646,7 +655,7 @@ async function handleSchedule() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        mood,
+        mood_factor: mood_factor,
         busy_start: busyStart,
         busy_end: busyEnd,
         wake_time: wakeTime,

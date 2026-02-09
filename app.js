@@ -837,13 +837,25 @@ function renderTimeline() {
 
   if (!timelinePanel) return;
 
+  const now = new Date();
   const todayTasks = state.tasks.filter(t => {
     if (!t.scheduled_time) return false;
     if (t.completed) return false; // Skip completed tasks
     
     const taskDate = new Date(t.scheduled_time).toDateString();
-    const today = new Date().toDateString();
-    return taskDate === today;
+    const today = now.toDateString();
+    if (taskDate !== today) return false;
+    
+    // If task is scheduled in the past, only show if it has remaining work
+    const scheduledTime = new Date(t.scheduled_time).getTime();
+    const nowTime = now.getTime();
+    if (scheduledTime < nowTime) {
+      // Task started in the past; include if remaining work exists
+      const remaining = t.remaining_minutes ?? t.duration ?? 0;
+      return remaining > 0;
+    }
+    
+    return true; // Future task, always include
   });
 
   if (todayTasks.length === 0) {
